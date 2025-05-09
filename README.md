@@ -12,8 +12,11 @@
 # 4. 使用bufio写入文件的效率 改为bufIo的方式后, 写入效率
 测试如下: total log count: 1000000, useTime:[2812]ms, write one log time: 0.002812[ms] 这样平均每秒写入的日志条数为: 100W/2.812s = 355618条, 也就是35W条 每条日志的延迟为 0.002812毫秒, 也就是2.8微秒, 这个效率是很不错的了 因为同样是加了互斥锁的
 
-# 5. bufIo方式同时开启3个goroutine, 每个goroutine写入100w条日志时的效率 total log count: 1000000, useTime:[12642]ms, write one log time: 0.012642[ms] goroutine数量3, 使用sync.WaitGroup写入, 每个goroutine写入100w条, 总耗时约12.6秒
+# 5. 单个goroutine和多个goroutine写入效率对比
+bufIo方式同时开启3个goroutine, 每个goroutine写入100w条日志时的效率 
+total log count: 1000000, useTime:[12642]ms, write one log time: 0.012642[ms] goroutine数量3, 使用sync.WaitGroup写入, 每个goroutine写入100w条, 总耗时约12.6秒
 
-# 6. 单个goroutine和多个goroutine写入效率对比
-bufIo方式单个goroutine写入300W条数据效率 单个goroutine写入300w条耗时: total log count: 3000000, useTime:[8789]ms, write one log time: 0.002929666666666667[ms]
+bufIo方式单个goroutine写入300W条数据效率 单个goroutine写入300w条耗时: 
+total log count: 3000000, useTime:[8789]ms, write one log time: 0.002929666666666667[ms]
+
 单个goroutine写入300W条和3个goroutine每个写入100W条的效率对比 单个goroutine: [8789]ms 3个goroutine: [12642]ms 因为多个goroutine之间有mutex加锁解锁开销, 因此总时长会比单个goroutine高很多
