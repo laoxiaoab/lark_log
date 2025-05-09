@@ -22,7 +22,7 @@ func (m *LarkLog) Init(path string, fileName string) error {
 	y, mon, d, h, min, sec, milli := CurrentTimeDetail()
 	logFileName := fmt.Sprintf("%s%s-%04d%02d%02d-%02d-%02d-%02d-%04d.log",
 		path, fileName, y, mon, d, h, min, sec, milli)
-	file, err := os.OpenFile(logFileName, os.O_CREATE | os.O_APPEND | os.O_WRONLY, 0644)
+	file, err := os.OpenFile(logFileName, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
 	if nil != err {
 		fmt.Printf("[error] log_file Init failed err:%+v\n", err)
 		return err
@@ -62,10 +62,6 @@ func (m *LarkLog) WriteLogBufIo(content string) {
 	writer.Flush()
 }
 
-func (m *LarkLog) WriteMultiVariableLog(fmt string, params ...interface{}) {
-
-}
-
 func DebugLog(content string) {
 	y, mon, d, h, min, sec, milli := CurrentTimeDetail()
 	str := fmt.Sprintf("[debug] %04d-%02d-%02d %02d:%02d:%02d.%d %s\n", y, mon, d, h, min, sec, milli, content)
@@ -90,7 +86,6 @@ func DebugLogBufIo(content string) {
 	logEntity.WriteLogBufIo(str)
 }
 
-
 /**
 **@brief: DebugLogMultiVariable, 变参形式的日志写入
 **@test:
@@ -102,4 +97,3 @@ func DebugLogMultiVariable(fmtStr string, param ...interface{}) {
 	str := fmt.Sprintf("[debug] %04d-%02d-%02d %02d:%02d:%02d.%d %s\n", y, mon, d, h, min, sec, milli, content)
 	logEntity.WriteLogBufIo(str)
 }
-
